@@ -5,34 +5,64 @@ import 'notiflix/dist/notiflix-3.2.5.min.css'
 import { fetchCountries } from '../fetchCountries';
 
 // const DEBOUNCE_DELAY = 300;
+const refs = {
+    countryList:document.querySelector(".country-list"),
+    inputOfCountry:document.querySelector("#search-box"),
+    countryInfo:document.querySelector(".country-info"),
+};
 
-// fetchCountries(ukraine);
-let data;
+let dataAPI;
 
-const inputOfCountry = document.querySelector("input#search-box");
-// const countryList = document.querySelector(".country-list");
-const countryInfo = document.querySelector(".country-info");
+// const inputOfCountry = document.querySelector("input#search-box");
+// // const countryList = document.querySelector(".country-list");
+// const countryInfo = document.querySelector(".country-info");
 
-inputOfCountry.addEventListener('input',debounce(
+refs.inputOfCountry.addEventListener('input',debounce(
     searchOfCountries, 3000));
 
+    // fetchCountries().then(resultOfResponse => {
+    //     console.log(resultOfResponse);
+    //     getCountryInfo(resultOfResponse);
+           
+    // })
+    // function getCountryInfo(dataAPI){
+
+    //     // fetchCountries.then(resultOfResponse => {
+    //     // console.log(resultOfResponse);
+    //     // // getCountryInfo(resultOfResponse);
+           
+    // // })
+    //     console.log(dataAPI);
+    //     // const {}
+    //     const markup = dataAPI.map((item) => {
+    //         console.log(dataAPI[0]);
+    
+    //         return `<li class = "country-listInfo">
+    //         <img class = "country-flag" src = "${dataAPI[0].flags.svg}"/>
+    //         <h2 class = "country-list-name">${dataAPI[0].name}</h2>
+    //         </li>`}).join('');
+    //         console.log(markup); 
+    //         refs.countryList.innerHTML=markup;
+    
+    // }
 
 
 function searchOfCountries(event){
-    event.preventDefault();
-    const inputData = inputOfCountry.value.trim();
+    event.preventDefault(); 
+    inputData = refs.inputOfCountry.value.trim();
     console.log(inputData);
    
     fetchCountries(inputData)
     .then(renderCountryList)
         
-        // const markup = data.results.map((item) =>
-        //  console.log(markup));
     .catch(console.log);
 }
 
-function renderCountryList(data){
-    console.log(data);
+
+
+
+function renderCountryList(dataAPI){
+    console.log(dataAPI);
     // const markup = data.map((item) => {
     // return 
     // `<li class = "country-listInfo">

@@ -1,6 +1,11 @@
 export {fetchCountries};
 import Notiflix from 'notiflix';
-const countryList = document.querySelector(".country-list");
+
+const refs = {
+    countryList:document.querySelector(".country-list"),
+    inputOfCountry:document.querySelector("#search-box"),
+    countryInfo:document.querySelector(".country-info"),
+};
 
 function fetchCountries(name){
 return fetch(`https://restcountries.com/v2/name/${name}?fields=name,flags,capital,population,languages`)
@@ -16,41 +21,34 @@ return response.json();
 .then(resultOfResponse => {
     console.log(resultOfResponse);
     getCountryInfo(resultOfResponse);
-    // const items = resultOfResponse.map(item => item.value
-    //     );
-    // console.log(items[0]);
-    const markup = resultOfResponse.map((item) => {
-  
-        return `<li class = "country-listInfo">
-        <img class = "country-flag" src = "${resultofresponse[0].flag.svg}"/>
-        <h2 class = "country-list-name">${resultofresponse[0].name}</h2>
-        </li>`}).join('');
-        countryList('.country-list').insertAdjasmentHTML('beforeend',markup);
-        console.log(markup); 
 })
-
+}
 // .catch(error => {
 //     console.log(error);
 // })
+// }
+
+function getCountryInfo(dataAPI){
+
+//     // fetchCountries.then(resultOfResponse => {
+    // console.log(resultOfResponse);
+    // getCountryInfo(resultOfResponse);
+       
+// })
+    console.log(dataAPI);
+    // const {}
+    const markup = dataAPI.map((item) => {
+        console.log(dataAPI[0]);
+
+        return `<li class = "country-listInfo">
+        <img class = "country-flag" src = "${dataAPI[0].flags.svg}"/>
+        <h2 class = "country-list-name">${dataAPI[0].name}</h2>
+        </li>`}).join('');
+        console.log(markup); 
+        refs.countryList.innerHTML=markup;
+
 }
-// fetchCountries();
 
-function getCountryInfo(data){
-    console.log(data);
-  
-
-    // const markup = data.map((item) => {
-    //     return 
-    //     `<li class = "country-listInfo">
-    //     <img class = "country-flag" src = "${item.flags.svg}"/>
-    //     <h2 class = "country-list-name">${item.name.official}</h2>
-    //     </li>`})
-    // const name = data.name;
-
-    // // console.log(name);
-    // const capital = data.languages[0];
-    // console.log(capital);
-}
 // getCountryInfo();
 
     // if (page > totalPages) {
@@ -76,3 +74,24 @@ function getCountryInfo(data){
 
 // const url = `https://restcountries.com/v3.1/name/{name}`;
 // return fetch(`https://restcountries.com/v3.1/{${name}}fields={name.official},{capital},{population},{languages}`)
+
+    // const markup = resultOfResponse.map((item) => {
+    //     console.log(resultOfResponse[0]);
+    //     return `<li class = "country-listInfo">
+    //     <img class = "country-flag" src = "${resultOfResponse[0].flags.svg}"/>
+    //     <h2 class = "country-list-name">${resultOfResponse[0].name}</h2>
+    //     </li>`}).join('');
+    //     console.log(markup); 
+        // countryList('.country-list').insertAdjasmentHTML('beforeend', markup);
+
+            // const markup = data.map((item) => {
+    //     return 
+    //     `<li class = "country-listInfo">
+    //     <img class = "country-flag" src = "${item.flags.svg}"/>
+    //     <h2 class = "country-list-name">${item.name.official}</h2>
+    //     </li>`})
+    // const name = data.name;
+
+    // // console.log(name);
+    // const capital = data.languages[0];
+    // console.log(capital);
