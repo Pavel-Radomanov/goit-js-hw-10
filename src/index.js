@@ -12,12 +12,16 @@ const refs = {
 let dataAPI;
 
 refs.inputOfCountry.addEventListener('input',debounce(
-    searchOfCountries, 3000));
+    searchOfCountries, 300));
 
 
 function searchOfCountries(event){
     event.preventDefault(); 
     const inputData = refs.inputOfCountry.value.trim();
+    if (inputData === ""){
+        clearOfInput();
+        return
+    }
     console.log(inputData);
    
     fetchCountries(inputData)
@@ -27,41 +31,47 @@ function searchOfCountries(event){
     .catch(console.log);
 }
 
+function clearOfInput() {
+    refs.countryList.innerHTML="";
+    refs.inputOfCountry.innerHTML="";
+}
 
 
 function getCountryInfo(resultOfResponse){
     console.log(resultOfResponse);
     const itemOfArray = resultOfResponse.length;
-            // console.log(resultOfResponse[0]);
+        // console.log(resultOfResponse[0]);
         // console.log(resultOfResponse[1]);
     if (itemOfArray > 10){
-        // clearInput();
+       
         Notiflix.Notify.info("Too many matches found. Please enter a more specific name.");
     return
     }
 else if (itemOfArray < 10 & itemOfArray > 1) {
-    for (let i = 0; i <= itemOfArray-1; i += 1) { 
-        console.log(i);
+    // for (let i = 0; i <= itemOfArray - 1; i += 1) { 
+    //     console.log(i);
      
     const markup = resultOfResponse.map((item) => {
-        return `<li class = "country-listInfo">
-           <img class = "country-flag" src = "${resultOfResponse[i].flags.svg}"/>
-           <h2 class = "country-list-name">${resultOfResponse[i].name}</h2>
+        return `<li class = "country-list">
+
+           <img class = "country-flag" src = "${item.flags.svg}"/>
+           <h2 class = "country-info-one">${item.name}</h2>
            </li>`}).join('');
-          
+        //    refs.countryList.innerHTML=markup;
            refs.countryList.insertAdjacentHTML('beforeEnd', markup);
            console.log(markup); 
-        }
+           
+        // }
         return
 }
 else if (itemOfArray === 1) {
     const markup = resultOfResponse.map((item) => {
-     return `<li class = "country-listInfo">
+     return `<li class = "country-info">
         <img class = "country-flag" src = "${resultOfResponse[0].flags.svg}"/>
-        <h2 class = "country-list-name">${resultOfResponse[0].name}</h2>
-        <p class = "country-list-name">Capital: ${resultOfResponse[0].capital}</p>
-        <p class = "country-list-name">Population: ${resultOfResponse[0].population}</p>
-        <p class = "country-list-name">Language: ${resultOfResponse[0].languages[0].name}</p>
+        <h2 class = "country-list-name-main">${resultOfResponse[0].name}</h2>
+        <p class = "country-list-name"><b>Capital:</b> ${resultOfResponse[0].capital}</p>
+        <p class = "country-list-name"><b>Population:</b> ${resultOfResponse[0].population}</p>
+        <p class = "country-list-name"><b>Language:</b> ${resultOfResponse[0].languages[0].name}</p>
         </li>`}).join('');
         // console.log(markup); 
         refs.countryList.innerHTML=markup;
